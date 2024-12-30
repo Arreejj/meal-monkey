@@ -171,7 +171,7 @@ class SignUpView extends ConsumerWidget {
                             } else {
                             
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Sign-up failed. Please try again.")),
+                                const SnackBar(content: Text("email is already taken. Please try again.")),
                               );
                             }
                           }

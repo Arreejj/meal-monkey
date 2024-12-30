@@ -16,11 +16,11 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-   
     final signInState = ref.watch(signInProvider);
 
     TextEditingController txtEmail = TextEditingController();
     TextEditingController txtPassword = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -28,9 +28,7 @@ class LoginView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 64,
-              ),
+              const SizedBox(height: 64),
               Text(
                 "Login",
                 style: TextStyle(
@@ -45,40 +43,32 @@ class LoginView extends ConsumerWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
+              // Email Field with Validation
               RoundTextfield(
                 hintText: "Your Email",
                 controller: txtEmail,
                 keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
+              // Password Field with Validation
               RoundTextfield(
                 hintText: "Password",
                 controller: txtPassword,
                 obscureText: true,
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               signInState.isLoading
                   ? const CircularProgressIndicator()
                   : RoundButton(
                       title: "Login",
                       onPressed: () async {
-                        if (txtEmail.text.isNotEmpty &&
-                            txtPassword.text.isNotEmpty) {
-                          final signInProviderNotifier =
-                              ref.read(signInProvider.notifier);
-
+                        if (txtEmail.text.isNotEmpty && txtPassword.text.isNotEmpty) {
+                          final signInProviderNotifier = ref.read(signInProvider.notifier);
                           String email = txtEmail.text;
                           String password = txtPassword.text;
 
-                          bool success = await signInProviderNotifier.signIn(
-                              email, password);
+                          bool success = await signInProviderNotifier.signIn(email, password);
 
                           if (success) {
                             Navigator.pushReplacement(
@@ -90,20 +80,18 @@ class LoginView extends ConsumerWidget {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content: Text(signInState.errorMessage.isEmpty
-                                      ? 'Sign-in failed. Please try again.'
-                                      : signInState.errorMessage)),
+                                content: Text(signInState.errorMessage.isEmpty
+                                    ? 'Email or password wrong. Please try again.'
+                                    : signInState.errorMessage),
+                              ),
                             );
                           }
                         }
                       },
                     ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               InkWell(
                 onTap: () {
-                 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -120,9 +108,7 @@ class LoginView extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               Text(
                 "or Login With",
                 style: TextStyle(
@@ -130,18 +116,16 @@ class LoginView extends ConsumerWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w500),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
+              // Facebook Login Button
               RoundIconButton(
                 icon: "assets/img/facebook_logo.png",
                 title: "Login with Facebook",
                 color: const Color(0xff367FC0),
                 onPressed: () {},
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
+              // Google Login Button
               RoundIconButton(
                 icon: "assets/img/google_logo.png",
                 title: "Login with Google",
@@ -152,14 +136,12 @@ class LoginView extends ConsumerWidget {
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const MenuView()),
+                        MaterialPageRoute(builder: (context) => const MenuView()),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text(
-                                "Google sign-in failed. Please try again.")),
+                            content: Text("Google sign-in failed. Please try again.")),
                       );
                     }
                   } catch (e) {
@@ -169,9 +151,8 @@ class LoginView extends ConsumerWidget {
                   }
                 },
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
+              // Sign Up Redirect
               Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -187,8 +168,7 @@ class LoginView extends ConsumerWidget {
                     onTap: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpView()));
+                          MaterialPageRoute(builder: (context) => SignUpView()));
                     },
                     child: Text(
                       "Sign Up",

@@ -4,7 +4,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
-
+ Future<bool> isEmailTaken(String email) async {
+    try {
+      final auth = FirebaseAuth.instance;
+      final signInMethods = await auth.fetchSignInMethodsForEmail(email);
+      return signInMethods.isNotEmpty; // If signInMethods are not empty, the email is taken.
+    } catch (e) {
+      return false; // If an error occurs, consider it as email not taken.
+    }
+  }
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -16,6 +24,9 @@ class FirebaseAuthService {
     }
     return null;
   }
+  
+
+ 
 
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {

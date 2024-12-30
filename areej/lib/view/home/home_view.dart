@@ -119,8 +119,8 @@ class HomeViewContent extends StatelessWidget {
                       children: [
                         Image.asset(
                           cObj['image']!,
-                          width: 50,
-                          height: 50,
+                          width: 90,
+                          height: 90,
                         ),
                         Text(cObj['name']!),
                       ],
